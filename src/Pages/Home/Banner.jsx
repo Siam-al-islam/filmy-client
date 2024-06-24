@@ -21,38 +21,32 @@ const Banner = () => {
                             <div className="relative">
                                 <div >
                                     <h1 className="md:text-6xl text-3xl font-bold text-white text-center">We cultivate careers</h1>
-                                    <p className="md:text-xl bg-white text-center uppercase">LIVE like a king in our best houses</p>
+                                    <p className="md:text-xl text-white text-center uppercase">for emerging artists, celebrating and amplifying the significance of handmade objects and their creators.</p>
                                     <div className="text-center mt-8">
-                                        <button className="uppercase bg-white btn btn-wide">Explore Now</button>
                                     </div>
                                 </div>
-                                {/* <img src='https://lirp.cdn-website.com/bf4fe880/dms3rep/multi/opt/luxury+real+estate+-+Ranger+Ridge-1920w.jpeg' /> */}
                             </div>
                         </SwiperSlide>
 
                         <SwiperSlide>
                             <div className="relative">
                                 <div >
-                                    <h1 className="md:text-8xl text-5xl font-bold text-white text-center">Explore New</h1>
-                                    <p className="text-xl bg-white text-center uppercase">LIVE like a king in our best houses</p>
+                                    <h1 className="md:text-6xl text-5xl font-bold text-white text-center">We discover innovative artists</h1>
+                                    <p className="text-xl text-white text-center uppercase">who push the limits of traditional methods and materials, pioneering new expressions and reshaping the future craft landscape.</p>
                                     <div className="text-center mt-8">
-                                        <button className="uppercase bg-white btn btn-wide">Explore Now</button>
                                     </div>
                                 </div>
-                                {/* <img src='https://www.bankrate.com/2022/09/01101108/luxury-real-estate-157375176.jpg' /> */}
                             </div>
                         </SwiperSlide>
 
                         <SwiperSlide>
                             <div className="">
                                 <div >
-                                    <h1 className="md:text-8xl text-5xl font-bold text-white text-center">Find Out Best Deals</h1>
-                                    <p className="text-xl bg-white text-center uppercase">LIVE like a king in our best houses</p>
+                                    <h1 className="md:text-6xl text-5xl font-bold text-white text-center">We provide resources and amplify craft </h1>
+                                    <p className="text-xl text-white text-center uppercase">LIVE like a king in our best houses</p>
                                     <div className="text-center mt-8">
-                                        <button className="uppercase bg-white btn btn-wide">Explore Now</button>
                                     </div>
                                 </div>
-                                {/* <img src='https://mbluxury1.s3.amazonaws.com/2024/02/01151752/luxury-real-estate-website-design-scaled.jpg' /> */}
                             </div>
                         </SwiperSlide>
                     </Swiper>

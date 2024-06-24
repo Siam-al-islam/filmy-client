@@ -6,7 +6,9 @@ import { Link } from 'react-router-dom';
 const Register = () => {
     return (
         <div>
-            <Navbar />
+            <div className="max-w-7xl mx-auto  py-5">
+                <Navbar />
+            </div>
             <div className="hero mt-8">
                 <div className="hero-content w-full md:flex-row flex-col gap-8">
                     <div className="card w-full max-w-lg shadow-2xl bg-base-100 border-2 border-[#7424ff]">

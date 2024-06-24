@@ -8,7 +8,7 @@ const Navbar = () => {
         <NavLink to="/myList"><li>My List</li></NavLink>
     </>
     return (
-        <div className="navbar">
+        <div className="navbar bg-[#38057b9a] rounded-lg">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -33,7 +33,7 @@ const Navbar = () => {
                         }
                     </ul>
                 </div>
-                <a className="btn btn-ghost text-2xl text-[#d4bfff]">Filmy</a>
+                <a className="btn btn-ghost text-2xl text-[#ffffff]">Filmy</a>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1 gap-8 text-white">
@@ -41,7 +41,7 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end gap-3">
-                <Link to="/login"><button className="border border-[#7424ff] text-[#7424ff] px-5 py-2 rounded-lg font-semibold">Login</button></Link>
+                <Link to="/login"><button className="border border-[#7424ff] text-white px-5 py-2 rounded-lg font-semibold">Login</button></Link>
                 <Link to="/register"><button className="border border-[#7424ff] bg-[#7424ff] text-white px-5 py-2 rounded-lg hidden md:block">Register</button></Link>
             </div>
         </div>

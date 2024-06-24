@@ -5,7 +5,7 @@ import { FaGithub, FaGoogle } from "react-icons/fa";
 
 const Login = () => {
     return (
-        <div>
+        <div className="max-w-7xl mx-auto  py-5">
             <Navbar />
             <div className="hero mt-8">
                 <div className="hero-content w-full md:flex-row flex-col gap-8">
