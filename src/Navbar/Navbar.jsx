@@ -42,6 +42,7 @@ const Navbar = () => {
                 })
                 .catch(error => {
                     console.log(error);
+                    setLoading(false)
                 })
         )
     }
@@ -79,7 +80,6 @@ const Navbar = () => {
                     {links}
                 </ul>
             </div>
-
             {
                 loading ? <span className="loading loading-spinner loading-lg"></span> :
                     <div className="navbar-end gap-3">
@@ -94,7 +94,7 @@ const Navbar = () => {
                                             <div className="w-10 rounded-full">
                                                 <img
                                                     alt={user?.displayName}
-                                                    src={user ? user?.photoURL : "https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2247726673.jpg"} />
+                                                    src={user ? user.photoURL : "https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2247726673.jpg"} />
                                             </div>
                                         </div>
                                         <ul
@@ -107,7 +107,7 @@ const Navbar = () => {
                                                 </a>
                                             </li>
                                             <li><a>Settings</a></li>
-                                            <li onClick={handleLogOut}><a>Logout</a></li>
+                                            <li onClick={handleLogOut}><a className="text-red-500">Logout</a></li>
                                         </ul>
                                     </div>
                                 </div>

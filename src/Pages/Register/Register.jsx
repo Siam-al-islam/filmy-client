@@ -2,22 +2,42 @@ import React, { useState } from 'react';
 import Navbar from '../../Navbar/Navbar';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import app from '../../firebase/firebase.config';
+import { FaEyeSlash, FaRegEye } from 'react-icons/fa6';
 
 const Register = () => {
     const auth = getAuth(app)
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [registerError, setRegisterError] = useState('');
+
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const handleRegister = (e) => {
         e.preventDefault();
         const form = new FormData(e.currentTarget);
-        const email = form.get('email')
+        const name = form.get('name');
+        const email = form.get('email');
         const password = form.get('password');
         const photo = form.get('photo');
         console.log(email, password);
         setLoading(true)
+
+        if (password.length < 6) {
+            setRegisterError("Password should be at least 6 characters");
+            return;
+        }
+        else if (!/[A-Z]/.test(password)) {
+            setRegisterError("Your Password should have at least one upper case characters");
+            return;
+        }
+        else if (!/[a-z]/.test(password)) {
+            setRegisterError("Your Password should have at least one lowecase case characters");
+            return;
+        }
 
         // creating user
         createUserWithEmailAndPassword(auth, email, password)
@@ -25,12 +45,13 @@ const Register = () => {
                 toast.success('Account Created Successfully', {
                     position: 'top-center'
                 })
-                setLoading(false)
-                console.log(result.user);
+                navigate(location?.state ? location.state : "/");
+                setLoading(false);
+                setRegisterError("")
             })
             .catch(error => {
-                console.error(error);
-                setLoading(false)
+                setRegisterError(error.message);
+                setLoading(false);
             })
     }
 
@@ -70,11 +91,16 @@ const Register = () => {
                                 </label>
                                 <div className="relative">
                                     <input
-                                        type="password"
+                                        type={showPassword ? "text" : "password"}
                                         placeholder="Password"
                                         name="password"
                                         className="input input-bordered w-full"
                                         required />
+                                    <span onClick={() => setShowPassword(!showPassword)} className='absolute text-xl cursor-pointer top-3 right-4'>
+                                        {
+                                            showPassword ? <FaEyeSlash /> : <FaRegEye />
+                                        }
+                                    </span>
                                 </div>
                             </div>
                             <div className="form-control mt-6">
@@ -84,8 +110,12 @@ const Register = () => {
                                 }
                             </div>
                             <div className="mt-6 text-center">
+                                {
+                                    registerError && <p className="text-red-600">{registerError}</p>
+                                }
                                 <h2>Already have an account? <Link to="/login" className="font-bold text-[#7424ff]">Login Now</Link></h2>
                             </div>
+
                             <ToastContainer />
                         </form>
                     </div>

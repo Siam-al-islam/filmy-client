@@ -1,14 +1,20 @@
 import { ToastContainer, toast } from "react-toastify";
 import Navbar from "../../Navbar/Navbar";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import { GithubAuthProvider, GoogleAuthProvider, getAuth, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import app from "../../firebase/firebase.config";
 import { useState } from "react";
+import { FaEyeSlash, FaRegEye } from "react-icons/fa6";
 
 const Login = () => {
     const auth = getAuth(app);
     const [loading, setLoading] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [loginError, setLoginError] = useState("");
+
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const googleProvider = new GoogleAuthProvider();
     const githubProvider = new GithubAuthProvider();
@@ -21,12 +27,18 @@ const Login = () => {
         const password = form.get('password');
         signInWithEmailAndPassword(auth, email, password)
             .then(result => {
-                setLoading(false);
                 console.log(result);
                 toast.success("Logged in successfully",
                     {
                         position: 'top-center'
                     })
+                navigate(location?.state ? location.state : "/");
+                setLoading(false);
+                setLoginError("")
+            })
+            .catch(error => {
+                setLoginError(error.message);
+                setLoading(false);
             })
     }
 
@@ -38,7 +50,9 @@ const Login = () => {
                     {
                         position: 'top-center'
                     })
+                navigate(location?.state ? location.state : "/");
             })
+            .catch()
     }
 
     const handleGithubLogin = () => {
@@ -72,7 +86,19 @@ const Login = () => {
                                 <label className="label">
                                     <span className="label-text">Password</span>
                                 </label>
-                                <input type="password" placeholder="Password" name="password" className="input input-bordered" required />
+                                <div className="relative">
+                                    <input
+                                        type={showPassword ? "text" : "password"}
+                                        placeholder="Password"
+                                        name="password"
+                                        className="input input-bordered w-full"
+                                        required />
+                                    <span onClick={() => setShowPassword(!showPassword)} className='absolute text-xl cursor-pointer top-3 right-4'>
+                                        {
+                                            showPassword ? <FaEyeSlash /> : <FaRegEye />
+                                        }
+                                    </span>
+                                </div>
                             </div>
                             <div className="form-control mt-6">
                                 {
@@ -81,6 +107,9 @@ const Login = () => {
                                 }
                             </div>
                             <div className="mt-6 text-center">
+                                {
+                                    loginError && <p className="text-red-600">{loginError}</p>
+                                }
                                 <h2>Do not have an account? <Link to="/register" className="font-bold text-[#7424ff]">Register Now</Link></h2>
                             </div>
                             <ToastContainer />
