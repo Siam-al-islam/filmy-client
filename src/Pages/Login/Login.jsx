@@ -2,32 +2,62 @@ import { ToastContainer, toast } from "react-toastify";
 import Navbar from "../../Navbar/Navbar";
 import { Link } from "react-router-dom";
 import { FaGithub, FaGoogle } from "react-icons/fa";
-import { useContext } from "react";
-import { AuthContext } from "../../Provider/AuthProvider";
+import { GithubAuthProvider, GoogleAuthProvider, getAuth, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import app from "../../firebase/firebase.config";
+import { useState } from "react";
 
 const Login = () => {
+    const auth = getAuth(app);
+    const [loading, setLoading] = useState(false);
 
-    const { createUserByGoogle } = useContext(AuthContext);
+    const googleProvider = new GoogleAuthProvider();
+    const githubProvider = new GithubAuthProvider();
 
     const handleLogin = (e) => {
         e.preventDefault();
-    }
-
-    const handleGithubLogin = (e) => {
-        e.preventDefault();
+        setLoading(true);
+        const form = new FormData(e.currentTarget);
+        const email = form.get('email')
+        const password = form.get('password');
+        signInWithEmailAndPassword(auth, email, password)
+            .then(result => {
+                setLoading(false);
+                console.log(result);
+                toast.success("Logged in successfully",
+                    {
+                        position: 'top-center'
+                    })
+            })
     }
 
     const handleGoogleLogin = () => {
-        createUserByGoogle();
-        toast.success("Logged in")
+        signInWithPopup(auth, googleProvider)
+            .then(result => {
+                console.log(result);
+                toast.success("Logged in successfully",
+                    {
+                        position: 'top-center'
+                    })
+            })
+    }
+
+    const handleGithubLogin = () => {
+        signInWithPopup(auth, githubProvider)
+            .then(result => {
+                console.log(result);
+                toast.success("Logged in successfully",
+                    {
+                        position: 'top-center'
+                    })
+            })
     }
 
     return (
-        <div className="max-w-7xl mx-auto  py-5">
+        <div className="max-w-7xl mx-auto py-5">
             <Navbar />
             <div className="hero mt-8">
                 <div className="hero-content w-full md:flex-row flex-col gap-8">
-                    <div className="card w-full max-w-lg shadow-2xl bg-base-100 border-2 border-[#7424ff]">
+                    <div className="card w-full max-w-lg shadow-2xl bg-[#9253ff10] border-2 border-[#7424ff]">
                         <div className="text-center mb-4 mt-3 text-[#7424ff] py-4 rounded-t-xl">
                             <h1 className="text-3xl font-semibold">Login Now</h1>
                         </div>
@@ -45,7 +75,10 @@ const Login = () => {
                                 <input type="password" placeholder="Password" name="password" className="input input-bordered" required />
                             </div>
                             <div className="form-control mt-6">
-                                <button className="btn bg-[#7424ff] text-white">Login</button>
+                                {
+                                    loading ? <div className='flex justify-center'><span className="loading loading-spinner loading-lg"></span></div>
+                                        : <button className="btn bg-[#7424ff] text-white">Login</button>
+                                }
                             </div>
                             <div className="mt-6 text-center">
                                 <h2>Do not have an account? <Link to="/register" className="font-bold text-[#7424ff]">Register Now</Link></h2>
@@ -59,7 +92,7 @@ const Login = () => {
                             <FaGoogle />
                             Login with Google
                         </button>
-                        <button onSubmit={handleGithubLogin} className="btn btn-outline w-full mt-3">
+                        <button onClick={handleGithubLogin} className="btn btn-outline w-full mt-3">
                             <FaGithub />
                             Login with GitHub
                         </button>

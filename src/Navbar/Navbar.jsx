@@ -1,4 +1,7 @@
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import app from "../firebase/firebase.config";
 
 const Navbar = () => {
     const links = <>
@@ -7,6 +10,35 @@ const Navbar = () => {
         <NavLink to="/addItem"><li>Add Item</li></NavLink>
         <NavLink to="/myList"><li>My List</li></NavLink>
     </>
+
+    const auth = getAuth(app);
+
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    const handleLogOut = () => {
+        setLoading(true)
+        setUser(null);
+        signOut()
+            .then(result => {
+                setLoading(false)
+                console.log(result);
+            })
+            .catch(error => {
+                console.error(error);
+            })
+    }
+
+    useEffect(() => {
+        const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser);
+        });
+
+        return () => {
+            unSubscribe();
+        }
+    }, [])
+
     return (
         <div className="navbar bg-[#38057b9a] rounded-lg">
             <div className="navbar-start">
@@ -40,10 +72,20 @@ const Navbar = () => {
                     {links}
                 </ul>
             </div>
-            <div className="navbar-end gap-3">
-                <Link to="/login"><button className="border border-[#7424ff] text-white px-5 py-2 rounded-lg font-semibold">Login</button></Link>
-                <Link to="/register"><button className="border border-[#7424ff] bg-[#7424ff] text-white px-5 py-2 rounded-lg hidden md:block">Register</button></Link>
-            </div>
+            {
+                loading ? <span className="loading loading-spinner loading-lg"></span> :
+                    <div className="navbar-end gap-3">
+                        {
+                            user ?
+                                <button onClick={handleLogOut} className="border border-[#ff4b4b] text-white px-5 py-2 rounded-lg font-semibold">Log Out</button>
+                                :
+                                <div className="flex gap-3">
+                                    <Link to="/login"><button className="border border-[#7424ff] text-white px-5 py-2 rounded-lg font-semibold">Login</button></Link>
+                                    <Link to="/register"><button className="border border-[#7424ff] bg-[#7424ff] text-white px-5 py-2 rounded-lg hidden md:block">Register</button></Link>
+                                </div>
+                        }
+                    </div>
+            }
         </div>
     );
 };

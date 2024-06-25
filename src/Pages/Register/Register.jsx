@@ -1,13 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import Navbar from '../../Navbar/Navbar';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../../Provider/AuthProvider';
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
+import app from '../../firebase/firebase.config';
 
 const Register = () => {
-
-    const { createUser } = useContext(AuthContext);
+    const auth = getAuth(app)
+    const [loading, setLoading] = useState(false);
 
     const handleRegister = (e) => {
         e.preventDefault();
@@ -16,17 +17,20 @@ const Register = () => {
         const password = form.get('password');
         const photo = form.get('photo');
         console.log(email, password);
+        setLoading(true)
 
-        // creating user 
-        createUser(email, password)
+        // creating user
+        createUserWithEmailAndPassword(auth, email, password)
             .then(result => {
-                // toast.success('Account Created Successfully', {
-                //     position: 'top-center'
-                // })
+                toast.success('Account Created Successfully', {
+                    position: 'top-center'
+                })
+                setLoading(false)
                 console.log(result.user);
             })
             .catch(error => {
                 console.error(error);
+                setLoading(false)
             })
     }
 
@@ -37,7 +41,7 @@ const Register = () => {
             </div>
             <div className="hero">
                 <div className="hero-content w-full md:flex-row flex-col gap-8">
-                    <div className="card w-full max-w-lg shadow-2xl bg-base-100 border-2 border-[#7424ff]">
+                    <div className="card w-full max-w-lg shadow-2xl bg-[#9253ff10] border-2 border-[#7424ff]">
                         <div className="text-center mb-4 mt-3 text-[#7424ff] py-4">
                             <h1 className="text-3xl font-semibold">Create an Account</h1>
                         </div>
@@ -74,7 +78,10 @@ const Register = () => {
                                 </div>
                             </div>
                             <div className="form-control mt-6">
-                                <button className="btn bg-[#7424ff] text-white">Register</button>
+                                {
+                                    loading ? <div className='flex justify-center'><span className="loading loading-spinner loading-lg"></span></div>
+                                        : <button className="btn bg-[#7424ff] text-white">Register</button>
+                                }
                             </div>
                             <div className="mt-6 text-center">
                                 <h2>Already have an account? <Link to="/login" className="font-bold text-[#7424ff]">Login Now</Link></h2>
