@@ -2,6 +2,8 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import app from "../firebase/firebase.config";
+import firebase from "firebase/compat/app";
+import { ToastContainer, toast } from "react-toastify";
 
 const Navbar = () => {
     const links = <>
@@ -13,21 +15,9 @@ const Navbar = () => {
 
     const auth = getAuth(app);
 
-    const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [user, setUser] = useState() || {};
 
-    const handleLogOut = () => {
-        setLoading(true)
-        setUser(null);
-        signOut()
-            .then(result => {
-                setLoading(false)
-                console.log(result);
-            })
-            .catch(error => {
-                console.error(error);
-            })
-    }
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -38,6 +28,23 @@ const Navbar = () => {
             unSubscribe();
         }
     }, [])
+
+    const handleLogOut = () => {
+        setLoading(true)
+        setUser(null);
+        return (
+            signOut(auth)
+                .then(result => {
+                    setLoading(false);
+                    toast.warn("Logged out Successfully", {
+                        position: 'top-center'
+                    })
+                })
+                .catch(error => {
+                    console.error(error);
+                })
+        )
+    }
 
     return (
         <div className="navbar bg-[#38057b9a] rounded-lg">
@@ -86,6 +93,7 @@ const Navbar = () => {
                         }
                     </div>
             }
+            <ToastContainer />
         </div>
     );
 };
