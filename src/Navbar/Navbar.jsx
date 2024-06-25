@@ -2,7 +2,6 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import app from "../firebase/firebase.config";
-import firebase from "firebase/compat/app";
 import { ToastContainer, toast } from "react-toastify";
 
 const Navbar = () => {
@@ -15,7 +14,7 @@ const Navbar = () => {
 
     const auth = getAuth(app);
 
-    const [user, setUser] = useState() || {};
+    const [user, setUser] = useState(null);
 
     const [loading, setLoading] = useState(false);
 
@@ -29,19 +28,20 @@ const Navbar = () => {
         }
     }, [])
 
+
     const handleLogOut = () => {
         setLoading(true)
         setUser(null);
         return (
             signOut(auth)
                 .then(result => {
-                    setLoading(false);
                     toast.warn("Logged out Successfully", {
                         position: 'top-center'
                     })
+                    setLoading(false);
                 })
                 .catch(error => {
-                    console.error(error);
+                    console.log(error);
                 })
         )
     }
@@ -79,12 +79,38 @@ const Navbar = () => {
                     {links}
                 </ul>
             </div>
+
             {
                 loading ? <span className="loading loading-spinner loading-lg"></span> :
                     <div className="navbar-end gap-3">
                         {
                             user ?
-                                <button onClick={handleLogOut} className="border border-[#ff4b4b] text-white px-5 py-2 rounded-lg font-semibold">Log Out</button>
+                                <div className="dropdown dropdown-end flex gap-3 items-center">
+                                    <div>
+                                        <h3 className="text-white">{user && user?.displayName}</h3>
+                                    </div>
+                                    <div>
+                                        <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                            <div className="w-10 rounded-full">
+                                                <img
+                                                    alt={user?.displayName}
+                                                    src={user ? user?.photoURL : "https://www.shutterstock.com/image-vector/user-profile-icon-vector-avatar-600nw-2247726673.jpg"} />
+                                            </div>
+                                        </div>
+                                        <ul
+                                            tabIndex={0}
+                                            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+                                            <li>
+                                                <a className="justify-between">
+                                                    Profile
+                                                    <span className="badge">New</span>
+                                                </a>
+                                            </li>
+                                            <li><a>Settings</a></li>
+                                            <li onClick={handleLogOut}><a>Logout</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
                                 :
                                 <div className="flex gap-3">
                                     <Link to="/login"><button className="border border-[#7424ff] text-white px-5 py-2 rounded-lg font-semibold">Login</button></Link>
