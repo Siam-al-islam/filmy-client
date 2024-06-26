@@ -14,7 +14,10 @@ const Home = () => {
                     <Banner />
                 </div>
             </div>
-            <CraftItems />
+            <div className="max-w-7xl mx-auto">
+                <CraftItems />
+
+            </div>
         </div>
     );
 };

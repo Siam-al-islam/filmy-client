@@ -3,17 +3,19 @@ const CraftCard = ({ craft }) => {
     const { photo, name, subcategory, description, price, rating, customization, time } = craft;
 
     return (
-        <div className="card card-side bg-base-100 shadow-xl">
-            <figure>
-                <img
-                    src={photo} />
-            </figure>
-            <div className="card-body">
-                <h2 className="card-title">New movie is released!</h2>
-                <p>Click the button to watch on Jetflix app.</p>
-                <div className="card-actions justify-end">
-                    <button className="btn btn-primary">Watch</button>
+        <div className="border border-[#ab24e541] p-5 rounded-lg">
+            <img className="rounded-lg" src={photo} />
+            <div className="space-y-2">
+                <h2 className="card-title">{name}</h2>
+                <h2 className="">{subcategory}</h2>
+                <h2 className="text-2xl text-purple-500 font-semibold">{price} $</h2>
+                <p>{description}</p>
+                <div className="flex justify-between">
+                    <h3>Rating: {rating}</h3>
+                    <h3>Customization: {customization}</h3>
                 </div>
+                <h2>Time: {time} hrs</h2>
+                <button className="btn w-full bg-purple-600 text-white">View Details</button>
             </div>
         </div>
     );
