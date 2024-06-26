@@ -5,7 +5,7 @@ const CraftCard = ({ craft }) => {
     return (
         <div className="border border-[#ab24e541] p-5 rounded-lg">
             <img className="rounded-lg" src={photo} />
-            <div className="space-y-2">
+            <div className="space-y-2 mt-4">
                 <h2 className="card-title">{name}</h2>
                 <h2 className="">{subcategory}</h2>
                 <h2 className="text-2xl text-purple-500 font-semibold">{price} $</h2>

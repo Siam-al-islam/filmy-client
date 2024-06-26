@@ -43,7 +43,7 @@ const AddCraft = () => {
             <div className="mt-10">
                 <h1 className="text-center font-bold text-4xl">Add Items</h1>
             </div>
-            <div className="w-full mt-10">
+            <div className="w-full mt-10 px-3">
                 <form onSubmit={handleAdd}>
                     <div className="flex flex-col md:flex-row w-full gap-6">
                         <div className="flex-1">

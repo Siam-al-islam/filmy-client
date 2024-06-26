@@ -8,7 +8,6 @@ const ErrorPage = () => {
 
     return (
         <div className="max-w-7xl mx-auto py-5">
-            <Navbar />
             <div className="space-y-3 mt-14 lg:mt-52">
                 <h1 className="text-center text-4xl font-semibold">{error.status}</h1>
                 <h3 className="text-center text-xl">{error.statusText}</h3>
