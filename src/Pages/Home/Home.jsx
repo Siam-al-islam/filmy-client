@@ -3,6 +3,7 @@ import Banner from "./Banner";
 import CraftItems from "./CraftItems";
 
 const Home = () => {
+
     return (
         <div>
             <div className="bg-[url('assets/download.jpeg')] bg-no-repeat bg-cover py-5">

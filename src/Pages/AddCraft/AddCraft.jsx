@@ -1,3 +1,4 @@
+import { ToastContainer, toast } from "react-toastify";
 import Navbar from "../../Navbar/Navbar";
 
 const AddCraft = () => {
@@ -5,14 +6,16 @@ const AddCraft = () => {
     const handleAdd = (e) => {
         e.preventDefault();
         const form = e.target;
+        const photo = form.photo.value;
         const name = form.name.value;
         const subcategory = form.subcategory.value;
         const description = form.description.value;
         const price = form.price.value;
         const rating = form.rating.value;
+        const customization = form.customization.value;
         const time = form.time.value;
 
-        const newCraft = { name, subcategory, description, price, rating, time };
+        const newCraft = { photo, name, subcategory, description, price, rating, customization, time };
         console.log(newCraft);
 
         // send data 
@@ -26,6 +29,11 @@ const AddCraft = () => {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
+                if (data.insertedId) {
+                    toast.success("Item Added", {
+                        position: 'top-center'
+                    })
+                }
             })
     }
 
@@ -107,6 +115,7 @@ const AddCraft = () => {
                     </div>
                     <div className="text-center mt-10"><button className="btn btn-wide bg-purple-700 text-white">Add</button></div>
                 </form>
+                <ToastContainer />
             </div>
         </div>
     );
