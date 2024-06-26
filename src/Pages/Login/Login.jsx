@@ -38,6 +38,9 @@ const Login = () => {
             })
             .catch(error => {
                 setLoginError(error.message);
+                toast.error("Wrong email or password", {
+                    position: 'top-center'
+                })
                 setLoading(false);
             })
     }
