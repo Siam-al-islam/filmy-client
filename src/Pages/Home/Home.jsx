@@ -1,5 +1,6 @@
 import Navbar from "../../Navbar/Navbar";
 import Banner from "./Banner";
+import CraftItems from "./CraftItems";
 
 const Home = () => {
     return (
@@ -12,6 +13,7 @@ const Home = () => {
                     <Banner />
                 </div>
             </div>
+            <CraftItems />
         </div>
     );
 };
