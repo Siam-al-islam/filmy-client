@@ -19,7 +19,7 @@ const AddCraft = () => {
         console.log(newCraft);
 
         // send data 
-        fetch('https://filmy-server-ixfwl2ezp-siam-al-islams-projects.vercel.app/craft', {
+        fetch('https://filmy-server-bk5hadlvf-siam-al-islams-projects.vercel.app/craft', {
             method: "POST",
             headers: {
                 'content-type': 'application/json'
