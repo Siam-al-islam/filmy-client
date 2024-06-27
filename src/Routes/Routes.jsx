@@ -6,7 +6,6 @@ import Login from "../Pages/Login/Login";
 import Register from "../Pages/Register/Register";
 import AddCraft from "../Pages/AddCraft/AddCraft";
 import PrivateRoute from "../Provider/PrivateRoute";
-import CraftItems from "../Pages/Home/CraftItems";
 
 const router = createBrowserRouter([
     {
