@@ -16,7 +16,7 @@ const router = createBrowserRouter([
             {
                 path: "/",
                 element: <Home />,
-                loader: () => fetch('http://localhost:5000/craft')
+                loader: () => fetch('https://filmy-server-r5274zm47-siam-al-islams-projects.vercel.app/craft')
             },
             {
                 path: "/addItem",
