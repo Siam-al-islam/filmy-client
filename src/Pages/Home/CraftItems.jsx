@@ -1,9 +1,10 @@
 import { useLoaderData } from "react-router-dom";
 import CraftCard from "./CraftCard";
+import loadedCrafts from "https://filmy-server-bf1m95pxc-siam-al-islams-projects.vercel.app/craft";
 
 const CraftItems = () => {
 
-    const loadedCrafts = useLoaderData();
+    // const loadedCrafts = useLoaderData();
 
     return (
         <div className="mt-10">
